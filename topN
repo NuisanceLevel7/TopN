@@ -1,0 +1,53 @@
+#!/usr/bin/python3
+
+import sys, time
+
+CHUNKSIZE = 1000
+sortfile = sys.argv[1]
+N = int(sys.argv[2])
+
+def getN(N,f):
+    i = 0
+    numbers = list()
+    for line in f:
+        numbers.append(int(line.strip()))
+        i += 1
+        if i == N:
+            break
+    return numbers
+    
+def main():
+    f = open(sortfile,"r")
+
+    # Grab the first N lines and do a reverse sort.
+    topn = getN(N,f)
+    topn.sort(reverse=True)
+
+    # Sort method
+    # 1. Iterate over the remainder of the file grabbing CHUNKSIZE lines
+    # 2. Filter out results less than the lowest valus I already have in topn
+    # 3. Combine what's left with what I have in topn.
+    # 4. Put the results in reverse sort order.
+    # 5. assign the top N valuse to topn list.
+    x = CHUNKSIZE 
+    while x == CHUNKSIZE:
+        numbers = getN(CHUNKSIZE,f)
+        x = len(numbers)
+        if x > 0:
+            keep = list()
+            for candidate in numbers:
+                if candidate < topn[N-1]:
+                    pass
+                else:
+                    keep.append(candidate)
+            topn.extend(keep)
+            topn.sort(reverse=True)
+            topn = topn[0:N]
+
+    print(topn)
+        
+# Boiler plate call to main()
+if __name__ == '__main__':
+  main()
+  
+sys.exit()
