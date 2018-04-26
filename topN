@@ -2,6 +2,12 @@
 
 import sys, time
 
+if len(sys.argv) != 3:
+    print("TopN requires 2 arguments.")
+    print("USAGE: ./TopN <filename> <N>")
+    print("Exiting...")
+    sys.exit()
+
 CHUNKSIZE = 1000
 sortfile = sys.argv[1]
 N = int(sys.argv[2])
